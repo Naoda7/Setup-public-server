@@ -36,18 +36,13 @@ done
 
 SETTING ROUTER
 Port Forwarding
-Name
-simpleServer
-Protocol
-TCP And UDP
-WAN Connection
- Auto
-LAN Host
-192.168.1.10
-WAN Port
-80 OR Your Port
-LAN Host Port
-80 OR Your Port
+
+Name           : simpleServer
+Protocol       : TCP And UDP
+WAN Connection : Auto
+LAN Host       : 192.168.1.10
+WAN Port       : 80 OR Your Port
+LAN Host Port  :80 OR Your Port
 
 
 RESTART APACHE
