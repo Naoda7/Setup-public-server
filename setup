@@ -1,0 +1,55 @@
+OS		: Kali linux ARM
+Device	        : RaspberryPi 3
+IP Local	: 192.168.1.10 (Static)
+Netmask       	: 24
+IP Gateway	: 192.168.1.1
+
+SETUP LOCAL SERVER
+sudo apt update
+sudo apt install apache2
+ufw allow ‘Apache’
+sudo service apache2 start
+
+MYSQL & PHP
+sudo apt-get install mariadb-server
+wget -q https://packages.sury.org/php/apt.gpg -O- | sudo apt-key add -
+sudo echo "deb https://packages.sury.org/php/ stretch main" | tee /etc/apt/sources.list.d/php.list
+sudo apt update
+sudo apt install php php-mysql libapache2-mod-php
+sudo apt-get install phpmyadmin
+systemctl restart apache2
+
+
+*notes
+Fix E: Package 'mysql-server' has no installation candidate
+sudo apt install mariadb-server mariadb-client
+
+Fix phpmyadmin not found after install
+sudo ln -s /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf sudo a2enconf phpmyadmin.conf sudo systemctl restart apache2
+
+
+
+SIMPLE IP PUBLIC
+echo $(wget -qO - https://api.ipify.org)
+(your ip Public)
+done
+
+SETTING ROUTER
+Port Forwarding
+Name
+simpleServer
+Protocol
+TCP And UDP
+WAN Connection
+ Auto
+LAN Host
+192.168.1.10
+WAN Port
+80 OR Your Port
+LAN Host Port
+80 OR Your Port
+
+
+RESTART APACHE
+sudo service apache2 restart
+done
