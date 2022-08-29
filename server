@@ -10,14 +10,43 @@ sudo apt install apache2
 ufw allow ‘Apache’
 sudo service apache2 start
 
-MYSQL & PHP
-sudo apt-get install mariadb-server
-wget -q https://packages.sury.org/php/apt.gpg -O- | sudo apt-key add -
-sudo echo "deb https://packages.sury.org/php/ stretch main" | tee /etc/apt/sources.list.d/php.list
+INSTALL MYSQL
+## Add MariaDB APT repository ##
+sudo apt -y install software-properties-common gnupg2
+sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xF1656F24C74CD1D8
+echo "deb [arch=amd64] http://mariadb.mirror.liquidtelecom.com/repo/10.6/debian bullseye main" | sudo tee /etc/apt/sources.list.d/mariadb.list
 sudo apt update
-sudo apt install php php-mysql libapache2-mod-php
-sudo apt-get install phpmyadmin
-systemctl restart apache2
+
+## Confirm ##
+apt policy mariadb-server
+
+## Install MariaDB ##
+sudo apt install mariadb-server
+
+## Start and enable mariadb service ##
+sudo systemctl enable --now mariadb
+
+## Secure MariaDB server ##
+sudo mysql_secure_installation
+-------------------------------------------------
+Switch to unix_socket authentication [Y/n] n , 
+Change the root password? [Y/n] y , 
+Remove anonymous users? [Y/n] y , 
+Disallow root login remotely? [Y/n] y , 
+Remove test database and access to it? [Y/n] y ,
+Reload privilege tables now? [Y/n] y , 
+-------------------------------------------------
+
+INSTALL PHP
+## Add SURY PHP PPA repository ##
+sudo apt -y install lsb-release apt-transport-https ca-certificates 
+sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+echo "deb https://packages.sury.org/php/ bullseye main" | sudo tee /etc/apt/sources.list.d/php.list
+
+sudo apt install libapache2-mod-php
+sudo apt install libphp-embed
+sudo apt install php
+
 
 
 *notes
