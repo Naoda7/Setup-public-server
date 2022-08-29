@@ -21,7 +21,10 @@ sudo apt update
 apt policy mariadb-server
 
 ## Install MariaDB ##
+sudo apt install dirmngr
+sudo apt update
 sudo apt install mariadb-server
+sudo mysql -u root -p
 
 ## Start and enable mariadb service ##
 sudo systemctl enable --now mariadb
