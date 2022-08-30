@@ -1,8 +1,8 @@
-OS		: Kali linux ARM
+OS		          : Kali linux ARM
 Device	        : RaspberryPi 3
-IP Local	: 192.168.1.10 (Static)
+IP Local	      : 192.168.1.10 (Static)
 Netmask       	: 24
-IP Gateway	: 192.168.1.1
+IP Gateway	    : 192.168.1.1
 
 SETUP LOCAL SERVER
 sudo apt update
@@ -12,6 +12,8 @@ sudo service apache2 start
 
 INSTALL MYSQL
 ## Add MariaDB APT repository ##
+https://mariadb.org/download/?t=repo-config&d=Debian+11+%22Bullseye%22&v=10.10+%5BRC%5D&r_m=nus
+
 sudo apt -y install software-properties-common gnupg2
 sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xF1656F24C74CD1D8
 echo "deb [arch=amd64] http://mariadb.mirror.liquidtelecom.com/repo/10.6/debian bullseye main" | sudo tee /etc/apt/sources.list.d/mariadb.list
@@ -24,7 +26,7 @@ apt policy mariadb-server
 sudo apt install dirmngr
 sudo apt update
 sudo apt install mariadb-server
-systemctl start mysql
+sudo systemctl start mysql
 sudo mysql -u root -p
 [no password]
 
@@ -45,28 +47,25 @@ Reload privilege tables now? [Y/n] y ,
 INSTALL PHP
 ## Add SURY PHP PPA repository ##
 sudo apt -y install lsb-release apt-transport-https ca-certificates 
+
 sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
 echo "deb https://packages.sury.org/php/ bullseye main" | sudo tee /etc/apt/sources.list.d/php.list
 
-sudo apt install libapache2-mod-php
-sudo apt install libphp-embed
 sudo apt install php
+sudo apt install libapache2-mod-php
+sudo apt-get install phpmyadmin
+systemctl restart apache2
 
-
-
-*notes
+------------------------------------------------------------------------------------
+*NOTES*
 Fix E: Package 'mysql-server' has no installation candidate
 sudo apt install mariadb-server mariadb-client
 
 Fix phpmyadmin not found after install
-sudo ln -s /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf sudo a2enconf phpmyadmin.conf sudo systemctl restart apache2
-
-
-
-SIMPLE IP PUBLIC
-echo $(wget -qO - https://api.ipify.org)
-(your ip Public)
-done
+sudo ln -s /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf 
+sudo a2enconf phpmyadmin.conf 
+sudo systemctl restart apache2
+------------------------------------------------------------------------------------
 
 SETTING ROUTER
 Port Forwarding
@@ -77,6 +76,12 @@ WAN Connection : Auto
 LAN Host       : 192.168.1.10
 WAN Port       : 80 OR Your Port
 LAN Host Port  :80 OR Your Port
+
+
+SIMPLE IP PUBLIC
+echo $(wget -qO - https://api.ipify.org)
+(your ip Public)
+done
 
 
 RESTART APACHE
