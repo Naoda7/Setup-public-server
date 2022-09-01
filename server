@@ -1,5 +1,4 @@
 OS		  : Kali linux ARM
-Device	          : RaspberryPi 3
 IP Local	  : 192.168.1.10 (Static)
 Netmask       	  : 24
 IP Gateway	  : 192.168.1.1
